@@ -2,6 +2,9 @@ package com.example.ardemo1;
 
 import java.io.IOException;
 
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -27,6 +30,18 @@ public class MainActivity extends Activity {
 	float headingAngle;
 	float pitchAngle;
 	float rollAngle;
+	
+	int accelerometerSensor;
+	float xAxis;
+	float yAxis;
+	float zAxis;
+	
+	LocationManager locationManager;
+	double latitude;
+	double longitude;
+	double altitude;
+	LocationListener locationListener;
+	
 	private Camera.Size getBestPreviewSize(int width,int height,Camera.Parameters params)
 	{
 		Camera.Size result = null;
@@ -41,6 +56,7 @@ public class MainActivity extends Activity {
 					areasize = size.width * size.height;
 				}
 				else {
+					//选取像素数最高的预览分辨率
 					if (areasize < size.width * size.height)
 					{
 						result = size;
@@ -129,6 +145,7 @@ public class MainActivity extends Activity {
 		// create about sensor
 		sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 		orientationSensor = Sensor.TYPE_ORIENTATION;
+		accelerometerSensor = Sensor.TYPE_ACCELEROMETER;
 		sensorListener = new SensorEventListener()
 		{
 
@@ -153,12 +170,50 @@ public class MainActivity extends Activity {
 				}
 				else if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
 				{
-					
+					xAxis = event.values[0];
+					yAxis = event.values[1];
+					zAxis = event.values[2];
+					Log.i(TAG,"xAxis: " + String.valueOf(xAxis));
+					Log.i(TAG,"yAxis: " + String.valueOf(yAxis));
+					Log.i(TAG,"zAxis: " + String.valueOf(zAxis));
 				}
 			}
 			
 		};
+		locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+		locationListener = new LocationListener() {
+
+			@Override
+			public void onLocationChanged(Location location) {
+				// TODO Auto-generated method stub
+				latitude = location.getLatitude();
+				longitude = location.getLongitude();
+				altitude = location.getAltitude();
+				Log.d(TAG,"latitude: " + String.valueOf(latitude));
+				Log.d(TAG,"longitude: " + String.valueOf(longitude));
+				Log.d(TAG,"altitude: " + String.valueOf(altitude));
+			}
+
+			@Override
+			public void onProviderDisabled(String provider) {
+				// TODO Auto-generated method stub
 				
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
 	}
 
 	@Override
@@ -178,6 +233,10 @@ public class MainActivity extends Activity {
 		if (sensorManager != null)
 		{
 			sensorManager.unregisterListener(sensorListener);
+		}
+		if (locationManager != null)
+		{
+			locationManager.removeUpdates(locationListener);
 		}
 		super.onPause();
 		
@@ -201,6 +260,12 @@ public class MainActivity extends Activity {
 		if (sensorManager != null)
 		{
 			sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(orientationSensor),SensorManager.SENSOR_DELAY_NORMAL);
+			//register the listener for accelerometer.
+			sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(accelerometerSensor),SensorManager.SENSOR_DELAY_NORMAL);
+		}
+		if (locationManager != null)
+		{
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, locationListener);
 		}
 	}
 	@Override

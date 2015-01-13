@@ -1,6 +1,7 @@
 package com.example.ardemo1;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,7 +21,8 @@ public class MainActivity extends Activity {
 
 	SurfaceView cameraPreview;
 	SurfaceHolder previewHolder;
-	static String TAG = "AR";
+	final static String TAG = "AR";
+	final static String GPS_TAG = "ARGPS";
 	Camera camera;
 	boolean inPreview;
 	boolean cameraReady;
@@ -67,7 +69,7 @@ public class MainActivity extends Activity {
 		}
 		if (result != null) 
 		{
-			String text = String.format("Find the best resolution (width:%d,height:%d)",result.width,result.height);
+			String text = String.format(Locale.US,"Find the best resolution (width:%d,height:%d)",result.width,result.height);
 			Log.i(TAG,text);
 		}	
 		else
@@ -189,9 +191,9 @@ public class MainActivity extends Activity {
 				latitude = location.getLatitude();
 				longitude = location.getLongitude();
 				altitude = location.getAltitude();
-				Log.d(TAG,"latitude: " + String.valueOf(latitude));
-				Log.d(TAG,"longitude: " + String.valueOf(longitude));
-				Log.d(TAG,"altitude: " + String.valueOf(altitude));
+				Log.d(GPS_TAG,"latitude: " + String.valueOf(latitude));
+				Log.d(GPS_TAG,"longitude: " + String.valueOf(longitude));
+				Log.d(GPS_TAG,"altitude: " + String.valueOf(altitude));
 			}
 
 			@Override

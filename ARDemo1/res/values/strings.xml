@@ -13,6 +13,6 @@
     <string name="altitude">Altitude:</string>
     <string name="longitude">Longitude:</string>
     <string name="latitude">Latitude:</string>
-    <string name="Empty"></string>
+    <string name="empty"></string>
 
 </resources>

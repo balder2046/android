@@ -16,6 +16,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 import android.util.Log;
 public class MainActivity extends Activity {
 
@@ -44,6 +45,21 @@ public class MainActivity extends Activity {
 	double altitude;
 	LocationListener locationListener;
 	
+	
+	//TextViews
+	TextView headingValue;
+	TextView pitchValue;
+	TextView rollValue;
+	
+	TextView xAxisValue;
+	TextView yAxisValue;
+	TextView zAxisValue;
+	
+	TextView latitudeValue;
+	TextView longitudeValue;
+	TextView altitudeValue;
+	
+	
 	private Camera.Size getBestPreviewSize(int width,int height,Camera.Parameters params)
 	{
 		Camera.Size result = null;
@@ -58,7 +74,7 @@ public class MainActivity extends Activity {
 					areasize = size.width * size.height;
 				}
 				else {
-					//Ñ¡È¡ÏñËØÊý×î¸ßµÄÔ¤ÀÀ·Ö±æÂÊ
+					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					if (areasize < size.width * size.height)
 					{
 						result = size;
@@ -83,8 +99,10 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
+		
 		Log.i(TAG,"Surface onCreate");
 		setContentView(R.layout.activity_main);
+		initForTextViews();
 		inPreview = false;
 		cameraPreview = (SurfaceView)findViewById(R.id.cameraPreview);
 		previewHolder = cameraPreview.getHolder();
@@ -165,6 +183,10 @@ public class MainActivity extends Activity {
 					headingAngle = event.values[0];
 					pitchAngle = event.values[1];
 					rollAngle = event.values[2];
+					
+					headingValue.setText(String.valueOf(headingAngle));
+					pitchValue.setText(String.valueOf(pitchAngle));
+					rollValue.setText(String.valueOf(rollAngle));
 					Log.i(TAG,"headingAngle: " + String.valueOf(headingAngle));
 					Log.i(TAG,"pitchAngle: " + String.valueOf(pitchAngle));
 					Log.i(TAG,"rollAngle: " + String.valueOf(rollAngle));
@@ -175,6 +197,9 @@ public class MainActivity extends Activity {
 					xAxis = event.values[0];
 					yAxis = event.values[1];
 					zAxis = event.values[2];
+					xAxisValue.setText(String.valueOf(xAxis));
+					yAxisValue.setText(String.valueOf(yAxis));
+					zAxisValue.setText(String.valueOf(zAxis));
 					Log.i(TAG,"xAxis: " + String.valueOf(xAxis));
 					Log.i(TAG,"yAxis: " + String.valueOf(yAxis));
 					Log.i(TAG,"zAxis: " + String.valueOf(zAxis));
@@ -191,6 +216,10 @@ public class MainActivity extends Activity {
 				latitude = location.getLatitude();
 				longitude = location.getLongitude();
 				altitude = location.getAltitude();
+				
+				latitudeValue.setText(String.valueOf(latitude));
+				longitudeValue.setText(String.valueOf(longitude));
+				altitudeValue.setText(String.valueOf(altitude));
 				Log.d(GPS_TAG,"latitude: " + String.valueOf(latitude));
 				Log.d(GPS_TAG,"longitude: " + String.valueOf(longitude));
 				Log.d(GPS_TAG,"altitude: " + String.valueOf(altitude));
@@ -216,8 +245,24 @@ public class MainActivity extends Activity {
 			}
 			
 		};
+		
 	}
-
+	private void initForTextViews()
+	{
+		//accelerate
+		xAxisValue = (TextView)findViewById(R.id.xAxisValue);
+		yAxisValue = (TextView)findViewById(R.id.yAxisValue);
+		zAxisValue = (TextView)findViewById(R.id.zAxisValue);
+		//rotation
+		headingValue = (TextView)findViewById(R.id.headingValue);
+		pitchValue = (TextView)findViewById(R.id.pitchValue);
+		rollValue = (TextView)findViewById(R.id.rollValue);
+		//gps data
+		latitudeValue = (TextView)findViewById(R.id.latitudeValue);
+		longitudeValue = (TextView)findViewById(R.id.longitudeValue);
+		altitudeValue = (TextView)findViewById(R.id.altitudeValue);
+		
+	}
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub

@@ -1,8 +1,77 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<android.view.SurfaceView 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width = "fill_parent" 
+    android:layout_height= "fill_parent">
+<android.view.SurfaceView
     android:id="@+id/cameraPreview"
     android:layout_width = "fill_parent"
     android:layout_height = "fill_parent" >
     
 </android.view.SurfaceView>
+<TexView android:id="@+id/xAxisLabel"
+    android:layout_width = "wrap_content" 
+    android:layout_height = "wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft = "18dp"
+    android:layout_marginTop = "15dp"
+    android:text="@string/xAxis"/>
+<TextView android:id="@+id/yAxisLabel"
+    android:layout_width = "wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_alignLeft = "@+id/xAxisLabel"
+    android:layout_below = "@+id/xAxisLabel"
+    android:text = "@string/yAxis"/>
+<TextView android:id="@+id/zAxisLabel"
+    android:layout_width = "wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_alignLeft = "@+id/xAxisLabel"
+    android:layout_below = "@+id/yAxisLabel" 
+    android:text = "@string/zAxis"/>
+<TextView android:id="@+id/headingLabel"
+    android:layout_width = "wrap_content" 
+    android:layout_height = "wrap_content"
+    android:layout_below ="@+id/zAxisLabel"
+    android:layout_alignLeft = "@+id/zAxisLabel"
+    android:layout_marginTop = "19dp"
+    android:text = "@string/heading" />
+<TextView android:id="@+id/pitchLabel"
+    android:layout_width = "wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_below = "@+id/headingLabel"
+    android:layout_alignLeft = "@+id/headingLabel"
+    android:text = "@string/pitch" />
+<TextView android:id = "@+id/rollLabel"
+    android:layout_width = "wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_below = "@+id/pitchLabel"
+    android:layout_alignLeft = "@+id/pitchLabel"
+    android:text = "@string/roll" />
+
+<TextView android:id = "@+id/latitudeLabel"
+    android:layout_width = "wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_below = "@+id/rollLabel"
+    android:layout_alignLeft = "@+id/rollLabel"
+    android:layout_marginLeft = "36dp"
+    android:text = "@string/latitude" />
+<TextView android:id = "@+id/longitudeLabel"
+    android:layout_width = "wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_below = "@+id/latitudeLabel"
+    android:layout_alignLeft = "@+id/latitudeLabel"
+    android:text = "@string/longitude" />
+    
+ <TextView android:id = "@+id/altitudeLabel"
+     android:layout_width = "wrap_content"
+     android:layout_height = "wrap_content"
+     android:layout_below = "@+id/longitudeLabel"
+     android:layout_alignLeft = "@+id/longitudeLabel"
+     android:text = "@string/altitude" />
+ <TextView android:id = "@+id/xAxisValue"
+     android:layout_width = "wrap_content"
+     android:layout_height = "wrap_content" 
+     />   
+
+</RelativeLayout>
